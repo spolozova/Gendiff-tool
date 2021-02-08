@@ -1,0 +1,31 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "Compares two configuration files and shows a difference",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spolozova/frontend-project-lvl2.git"
+  },
+  "author": "Svetlana Polozova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spolozova/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/spolozova/frontend-project-lvl2#readme",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  },
+  "dependencies": {
+    "commander": "^7.0.0"
+  }
+}
