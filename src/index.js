@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { getNomalizedPath, getFileData, getParsedData } from './utils.js';
 
-const UNCHANGED = '  ';
-const ADDED = '+ ';
-const DELETED = '- ';
+const UNCHANGED = '    ';
+const ADDED = '  + ';
+const DELETED = '  - ';
 
 export default (filepath1, filepath2) => {
   const fileBefore = getParsedData(getFileData(getNomalizedPath(filepath1)));
@@ -24,5 +24,5 @@ export default (filepath1, filepath2) => {
   }, [])
     .map(([state, key, value]) => `${state}${key}: ${value}`)
     .join('\n');
-  console.log(`{\n${difference}\n}`);
+    return `{\n${difference}\n}`;
 };

@@ -4,7 +4,7 @@
   "description": "Compares two configuration files and shows a difference",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest --watch"
   },
   "bin": {
     "gendiff": "bin/gendiff.js"
