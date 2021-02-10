@@ -24,5 +24,5 @@ export default (filepath1, filepath2) => {
   }, [])
     .map(([state, key, value]) => `${state}${key}: ${value}`)
     .join('\n');
-    return `{\n${difference}\n}`;
+  return `{\n${difference}\n}`;
 };

@@ -10,7 +10,7 @@ test:
 	npm test
 
 test-coverage:
-	npx jest --coverage
+	npm test -- --coverage
 	
 lint:
 	npx eslint .
