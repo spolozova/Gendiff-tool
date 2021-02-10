@@ -1,4 +1,4 @@
-//import fs from 'fs';
+// import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import * as path from 'path';
@@ -11,7 +11,7 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 // const readFile = (filename) => fs.readFile(getFixturePath(filename), 'utf-8');
 // нужна для чтения ожидаемых результатов
 // const json = await readFile('expected.json');
-  
+
 const fileBefore = getFixturePath('json1.json');
 const fileAfter = getFixturePath('json2.json');
 test('getDiff JSON', () => {
