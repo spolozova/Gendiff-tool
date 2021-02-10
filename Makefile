@@ -1,7 +1,8 @@
-install: install-deps
+install:
+	npm install
 
 run:
-	bin/gendiff.js 10
+	bin/gendiff.js
 
 install-deps:
 	npm ci
@@ -10,7 +11,7 @@ test:
 	npm test
 
 test-coverage:
-	npm test -- --coverage --coverageProvider=v8
-	
+	npx jest --coverage --coverageProvider=v8
+
 lint:
 	npx eslint .
