@@ -1,13 +1,16 @@
 install: install-deps
 
+run:
+	bin/gendiff.js 10
+
 install-deps:
 	npm ci
 
 test:
-	npx -n --experimental-vm-modules jest
+	npm test
 
 test-coverage:
-	npx -n --experimental-vm-modules jest --coverage
+	npm test --coverage --coverageProvider=v8
 
 lint:
 	npx eslint .
