@@ -11,13 +11,14 @@ export default (filepath1, filepath2) => {
   const keys = _.sortBy(_.union(_.keys(fileBefore), _.keys(fileAfter)));
   const difference = keys.reduce((acc, key) => {
     if (!_.has(fileBefore, key)) {
-      return [...acc, [ADDED, key, fileAfter[key]]];
-    } if (!_.has(fileAfter, key)) {
-      return [...acc, [DELETED, key, fileBefore[key]]];
-    } if (fileBefore[key] === fileAfter[key]) {
-      return [...acc, [UNCHANGED, key, fileBefore[key]]];
-    } if (fileBefore[key] !== fileAfter[key]) {
-      return [...acc, [DELETED, key, fileBefore[key]], [ADDED, key, fileAfter[key]]];
+      acc.push([ADDED, key, fileAfter[key]]);
+    } else if (!_.has(fileAfter, key)) {
+      acc.push([DELETED, key, fileBefore[key]]);
+    } else if (fileBefore[key] === fileAfter[key]) {
+      acc.push([UNCHANGED, key, fileBefore[key]]);
+    } else if (fileBefore[key] !== fileAfter[key]) {
+      acc.push([DELETED, key, fileBefore[key]]);
+      acc.push([ADDED, key, fileAfter[key]]);
     }
     return acc;
   }, [])
