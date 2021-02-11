@@ -12,7 +12,6 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 // нужна для чтения ожидаемых результатов
 // const json = await readFile('expected.json');
 
-
 test('getDiff JSON', () => {
   const jsonBefore = getFixturePath('json1.json');
   const jasonAfter = getFixturePath('json2.json');
