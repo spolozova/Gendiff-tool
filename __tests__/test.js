@@ -12,10 +12,26 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 // нужна для чтения ожидаемых результатов
 // const json = await readFile('expected.json');
 
-const fileBefore = getFixturePath('json1.json');
-const fileAfter = getFixturePath('json2.json');
+
 test('getDiff JSON', () => {
-  const difference = getDiff(fileBefore, fileAfter);
+  const jsonBefore = getFixturePath('json1.json');
+  const jasonAfter = getFixturePath('json2.json');
+  const difference = getDiff(jsonBefore, jasonAfter);
+  expect(difference).toEqual(`{
+  - follow: false
+    host: hexlet.io
+    name: test
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`);
+});
+
+test('getDiff YAML', () => {
+  const yamlBefore = getFixturePath('yaml1.yml');
+  const yamlAfter = getFixturePath('yaml2.yml');
+  const difference = getDiff(yamlBefore, yamlAfter);
   expect(difference).toEqual(`{
   - follow: false
     host: hexlet.io

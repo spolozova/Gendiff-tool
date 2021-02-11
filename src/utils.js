@@ -8,6 +8,6 @@ const getFileData = (filepath) => {
   return fs.readFileSync(normalizedPath, 'UTF-8');
 };
 
-const getParsedData = (data) => JSON.parse(data);
+const getExtname = (filepath) => path.extname(filepath);
 
-export { getNomalizedPath, getFileData, getParsedData };
+export { getNomalizedPath, getFileData, getExtname };
