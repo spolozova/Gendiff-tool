@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { getStatus, getKey, getValue } from './utils.js';
 
 const states = {
   unchanged: '    ',
@@ -12,18 +11,18 @@ const stringfy = (value, spacesCount) => {
     if (!_.isPlainObject(currentValue)) {
       return `${currentValue}`;
     }
-    const currentIndent = states['unchanged'].repeat(depth);
-    const bracketIndent = states['unchanged'].repeat(depth - 1);
+    const currentIndent = states.unchanged.repeat(depth);
+    const bracketIndent = states.unchanged.repeat(depth - 1);
     const lines = Object
       .entries(currentValue)
       .map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
-     return [
+    return [
       '{',
       ...lines,
       `${bracketIndent}}`,
     ].join('\n');
   };
-   return iter(value, spacesCount);
+  return iter(value, spacesCount);
 };
 
 const stylish = (difference) => {
@@ -31,23 +30,23 @@ const stylish = (difference) => {
     if (!Array.isArray(currentValue)) {
       return stringfy(currentValue, depth);
     }
-    const currentIndent = states['unchanged'].repeat(depth - 1);
+    const currentIndent = states.unchanged.repeat(depth - 1);
     const stylizedDiff = currentValue
       .flatMap(([key, value, status, oldValue]) => {
         if (status === 'changed') {
-          const deletedValue = `${currentIndent}${states['deleted']}${key}: ${iter(oldValue, depth + 1)}`;
-          const addedValue = `${currentIndent}${states['added']}${key}: ${iter(value, depth + 1)}`;
+          const deletedValue = `${currentIndent}${states.deleted}${key}: ${iter(oldValue, depth + 1)}`;
+          const addedValue = `${currentIndent}${states.added}${key}: ${iter(value, depth + 1)}`;
           return [deletedValue, addedValue];
         }
         if (status === 'node') {
-          return `${currentIndent}${states['unchanged']}${key}: ${iter(value, depth + 1)}`
+          return `${currentIndent}${states.unchanged}${key}: ${iter(value, depth + 1)}`;
         }
-        return `${currentIndent}${states[status]}${key}: ${iter(value, depth + 1)}`
+        return `${currentIndent}${states[status]}${key}: ${iter(value, depth + 1)}`;
       });
     return [
       '{',
-    ...stylizedDiff,
-    `${currentIndent}}`,
+      ...stylizedDiff,
+      `${currentIndent}}`,
     ].join('\n');
   };
   return iter(difference, 1);

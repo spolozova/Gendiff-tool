@@ -1,4 +1,10 @@
-import { getNormalizedPath, getFileData, getExtname, buildDiff } from './utils.js';
+import {
+  getNormalizedPath,
+  getFileData,
+  getExtname,
+  buildDiff,
+} from './utils.js';
+
 import getParsedData from './parsers.js';
 import stylish from './stylish.js';
 
@@ -12,6 +18,6 @@ export default (filepath1, filepath2, format = stylish) => {
   const fileBefore = getParsedData(typeFile1, dataFile1);
   const fileAfter = getParsedData(typeFile2, dataFile2);
   const diff = buildDiff(fileBefore, fileAfter);
-  const stylezedDiff = stylish(diff);
+  const stylezedDiff = format(diff);
   return stylezedDiff;
 };

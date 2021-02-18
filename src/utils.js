@@ -11,10 +11,6 @@ const getFileData = (filepath) => {
 
 const getExtname = (filepath) => path.extname(filepath);
 
-const getStatus = (node) => node.status;
-const getKey = (node) => node.key;
-const getValue = (node) => node.value;
-
 const buildDiff = (fileBefore, fileAfter) => {
   const keys = _.sortBy(_.union(_.keys(fileBefore), _.keys(fileAfter)));
   const difference = keys.map((key) => {
@@ -22,12 +18,12 @@ const buildDiff = (fileBefore, fileAfter) => {
     const newValue = fileAfter[key];
     if (!_.has(fileBefore, key)) {
       return [key, newValue, 'added'];
-    } 
+    }
     if (!_.has(fileAfter, key)) {
       return [key, oldValue, 'deleted'];
     }
     if (_.isPlainObject(oldValue) && _.isPlainObject(newValue)) {
-      return [key, buildDiff(oldValue, newValue), 'node']
+      return [key, buildDiff(oldValue, newValue), 'node'];
     } if (!_.isEqual(oldValue, newValue)) {
       return [key, newValue, 'changed', oldValue];
     }
@@ -40,8 +36,5 @@ export {
   getNormalizedPath,
   getFileData,
   getExtname,
-  getStatus,
-  getKey,
-  getValue,
   buildDiff,
 };
