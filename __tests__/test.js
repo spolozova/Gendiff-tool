@@ -55,7 +55,7 @@ test('getDiff JSON', () => {
         }
         fee: 100500
     }
-}`, );
+}`);
 });
 
 test('getDiff YAML', () => {
