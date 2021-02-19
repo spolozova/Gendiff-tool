@@ -49,11 +49,7 @@ const getStylishForm = (difference) => {
         }
         return `${currentIndent}${states[status]}${key}: ${iter(value, depth + 1)}`;
       });
-    return [
-      '{',
-      ...stylizedDiff,
-      `${currentIndent}}`,
-    ].join('\n');
+    return ['{', ...stylizedDiff, `${currentIndent}}`].join('\n');
   };
   return iter(difference, 1);
 };
