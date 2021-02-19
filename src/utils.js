@@ -25,7 +25,12 @@ const buildDiff = (fileBefore, fileAfter) => {
     if (_.isPlainObject(oldValue) && _.isPlainObject(newValue)) {
       return { key, value: buildDiff(oldValue, newValue), status: 'node' };
     } if (!_.isEqual(oldValue, newValue)) {
-      return { key, value: newValue, status: 'updated', oldValue };
+      return {
+        key,
+        value: newValue,
+        status: 'updated',
+        oldValue,
+      };
     }
     return { key, value: oldValue, status: 'unchanged' };
   });

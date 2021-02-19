@@ -32,14 +32,19 @@ const getStylishForm = (difference) => {
     }
     const currentIndent = states.unchanged.repeat(depth - 1);
     const stylizedDiff = currentValue
-      .flatMap(({ key, value, status, oldValue }) => {
-        switch(status) {
-        case 'updated':
-          const deletedValue = `${currentIndent}${states.deleted}${key}: ${iter(oldValue, depth + 1)}`;
-          const addedValue = `${currentIndent}${states.added}${key}: ${iter(value, depth + 1)}`;
-          return [deletedValue, addedValue];
-        case 'node':
-          return `${currentIndent}${states.unchanged}${key}: ${iter(value, depth + 1)}`;
+      .flatMap(({
+        key,
+        value,
+        status,
+        oldValue,
+      }) => {
+        switch (status) {
+          case 'updated':
+            const deletedValue = `${currentIndent}${states.deleted}${key}: ${iter(oldValue, depth + 1)}`;
+            const addedValue = `${currentIndent}${states.added}${key}: ${iter(value, depth + 1)}`;
+            return [deletedValue, addedValue];
+          case 'node':
+            return `${currentIndent}${states.unchanged}${key}: ${iter(value, depth + 1)}`;
           default:
             return `${currentIndent}${states[status]}${key}: ${iter(value, depth + 1)}`;
         }
