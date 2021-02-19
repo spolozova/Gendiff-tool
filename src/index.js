@@ -6,9 +6,9 @@ import {
 } from './utils.js';
 
 import getParsedData from './parsers.js';
-import stylish from './stylish.js';
+import getFormatter from './formatters/index.js';
 
-export default (filepath1, filepath2, format = stylish) => {
+export default (filepath1, filepath2, formatName) => {
   const fullPathFile1 = getNormalizedPath(filepath1);
   const fullPathFile2 = getNormalizedPath(filepath2);
   const typeFile1 = getExtname(fullPathFile1);
@@ -18,6 +18,6 @@ export default (filepath1, filepath2, format = stylish) => {
   const fileBefore = getParsedData(typeFile1, dataFile1);
   const fileAfter = getParsedData(typeFile2, dataFile2);
   const diff = buildDiff(fileBefore, fileAfter);
-  const stylezedDiff = format(diff);
-  return stylezedDiff;
+  const formatter = getFormatter(formatName);
+  return formatter(diff);
 };

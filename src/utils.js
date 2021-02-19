@@ -17,17 +17,17 @@ const buildDiff = (fileBefore, fileAfter) => {
     const oldValue = fileBefore[key];
     const newValue = fileAfter[key];
     if (!_.has(fileBefore, key)) {
-      return [key, newValue, 'added'];
+      return { key, value: newValue, status: 'added' };
     }
     if (!_.has(fileAfter, key)) {
-      return [key, oldValue, 'deleted'];
+      return { key, value: oldValue, status: 'deleted' };
     }
     if (_.isPlainObject(oldValue) && _.isPlainObject(newValue)) {
-      return [key, buildDiff(oldValue, newValue), 'node'];
+      return { key, value: buildDiff(oldValue, newValue), status: 'node' };
     } if (!_.isEqual(oldValue, newValue)) {
-      return [key, newValue, 'changed', oldValue];
+      return { key, value: newValue, status: 'updated', oldValue };
     }
-    return [key, oldValue, 'unchanged'];
+    return { key, value: oldValue, status: 'unchanged' };
   });
   return difference;
 };
