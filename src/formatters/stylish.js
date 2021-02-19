@@ -38,16 +38,15 @@ const getStylishForm = (difference) => {
         status,
         oldValue,
       }) => {
-        switch (status) {
-          case 'updated':
-            const deletedValue = `${currentIndent}${states.deleted}${key}: ${iter(oldValue, depth + 1)}`;
-            const addedValue = `${currentIndent}${states.added}${key}: ${iter(value, depth + 1)}`;
-            return [deletedValue, addedValue];
-          case 'node':
-            return `${currentIndent}${states.unchanged}${key}: ${iter(value, depth + 1)}`;
-          default:
-            return `${currentIndent}${states[status]}${key}: ${iter(value, depth + 1)}`;
+        if (status === 'update') {
+          const deletedValue = `${currentIndent}${states.deleted}${key}: ${iter(oldValue, depth + 1)}`;
+          const addedValue = `${currentIndent}${states.added}${key}: ${iter(value, depth + 1)}`;
+          return [deletedValue, addedValue];
         }
+        if (status === 'node') {
+          return `${currentIndent}${states.unchanged}${key}: ${iter(value, depth + 1)}`;
+        }
+        return `${currentIndent}${states[status]}${key}: ${iter(value, depth + 1)}`;
       });
     return [
       '{',
