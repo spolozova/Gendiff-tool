@@ -38,7 +38,7 @@ const getStylishForm = (difference) => {
         status,
         oldValue,
       }) => {
-        if (status === 'update') {
+        if (status === 'updated') {
           const deletedValue = `${currentIndent}${states.deleted}${key}: ${iter(oldValue, depth + 1)}`;
           const addedValue = `${currentIndent}${states.added}${key}: ${iter(value, depth + 1)}`;
           return [deletedValue, addedValue];
