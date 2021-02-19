@@ -35,6 +35,7 @@ const getStylishForm = (difference) => {
       .flatMap(({
         key,
         value,
+        children,
         status,
         oldValue,
       }) => {
@@ -44,7 +45,7 @@ const getStylishForm = (difference) => {
           return [deletedValue, addedValue];
         }
         if (status === 'node') {
-          return `${currentIndent}${states.unchanged}${key}: ${iter(value, depth + 1)}`;
+          return `${currentIndent}${states.unchanged}${key}: ${iter(children, depth + 1)}`;
         }
         return `${currentIndent}${states[status]}${key}: ${iter(value, depth + 1)}`;
       });

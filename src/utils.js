@@ -12,7 +12,9 @@ const getFileData = (filepath) => {
 const getExtname = (filepath) => path.extname(filepath);
 
 const buildDiff = (fileBefore, fileAfter) => {
-  const keys = _.sortBy(_.union(_.keys(fileBefore), _.keys(fileAfter)));
+  const keysBefore = _.keys(fileBefore);
+  const keysAfter = _.keys(fileAfter);
+  const keys = _.sortBy(_.union(keysBefore, keysAfter));
   const difference = keys.map((key) => {
     const oldValue = fileBefore[key];
     const newValue = fileAfter[key];
@@ -23,7 +25,7 @@ const buildDiff = (fileBefore, fileAfter) => {
       return { key, value: oldValue, status: 'deleted' };
     }
     if (_.isPlainObject(oldValue) && _.isPlainObject(newValue)) {
-      return { key, value: buildDiff(oldValue, newValue), status: 'node' };
+      return { key, children: buildDiff(oldValue, newValue), status: 'node' };
     } if (!_.isEqual(oldValue, newValue)) {
       return {
         key,

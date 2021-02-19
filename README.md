@@ -5,4 +5,6 @@
 ![Node CI](https://github.com/spolozova/frontend-project-lvl2/workflows/Node%20CI/badge.svg)
 [![gendiffjsons](https://asciinema.org/a/390111.svg)](https://asciinema.org/a/390111)
 [![gendiffyaml](https://asciinema.org/a/390529.svg)](https://asciinema.org/a/390529)
-[![stylish](https://asciinema.org/a/392052.svg)](https://asciinema.org/a/392052)
+[![stylish](https://asciinema.org/a/392433.svg)](https://asciinema.org/a/392433)
+[![plain](https://asciinema.org/a/392434.svg)](https://asciinema.org/a/392434)
+[![json](https://asciinema.org/a/392436.svg)](https://asciinema.org/a/392436)
