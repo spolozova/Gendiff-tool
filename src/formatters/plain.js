@@ -4,18 +4,23 @@ const states = {
   changed: 'was updated.',
   added: 'was added with value:',
   deleted: 'was removed',
-  };
+};
 
 const formatValue = (value) => {
   if (_.isPlainObject(value)) {
     return '[complex value]';
   }
-  return (typeof(value) === 'string') ? `'${value}'` : value;
+  return (typeof value === 'string') ? `'${value}'` : value;
 };
 
 const getPlainForm = (difference) => {
   const iter = (node, ancestry) => {
-    const { key, value, status, oldValue } = node;
+    const {
+      key,
+      value,
+      status,
+      oldValue,
+    } = node;
     const newAncesrty = _.concat(ancestry, key);
     const currentValue = formatValue(value);
     const previousValue = formatValue(oldValue);
