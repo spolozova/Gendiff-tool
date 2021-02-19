@@ -36,6 +36,8 @@ const getPlainForm = (difference) => {
         return `Property '${newAncesrty.join('.')}' ${states.added} ${currentValue}`;
       case 'node':
         return children.flatMap((node) => iter(node, newAncesrty));
+      default:
+        throw new Error('Unknown status!');
     }
   };
   return difference.flatMap((node) => iter(node, [])).join('\n');
