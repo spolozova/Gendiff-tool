@@ -7,4 +7,4 @@ const formatters = {
   plain: getPlainForm,
   json: getJsonForm,
 };
-export default (formatName = 'stylish') => formatters[formatName];
+export default (diff, formatName = 'stylish') => formatters[formatName](diff);

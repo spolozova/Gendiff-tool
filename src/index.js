@@ -1,23 +1,17 @@
-import {
-  getNormalizedPath,
-  getFileData,
-  getExtname,
-  buildDiff,
-} from './utils.js';
+import * as path from 'path';
+import fs from 'fs';
 
-import getParsedData from './parsers.js';
-import getFormatter from './formatters/index.js';
+import { buildDiff } from './builder.js';
+import parse from './parsers.js';
+import format from './formatters/index.js';
+
+const getFullPath = (filepath) =>  path.resolve(process.cwd(), filepath);
+const getExtension = (filepath) => path.extname(filepath).split('.').join('');
+const getData = (filepath) => parse(fs.readFileSync(filepath, 'UTF-8'), getExtension(filepath));
 
 export default (filepath1, filepath2, formatName) => {
-  const fullPathFile1 = getNormalizedPath(filepath1);
-  const fullPathFile2 = getNormalizedPath(filepath2);
-  const typeFile1 = getExtname(fullPathFile1);
-  const typeFile2 = getExtname(fullPathFile2);
-  const dataFile1 = getFileData(fullPathFile1);
-  const dataFile2 = getFileData(fullPathFile2);
-  const fileBefore = getParsedData(typeFile1, dataFile1);
-  const fileAfter = getParsedData(typeFile2, dataFile2);
-  const diff = buildDiff(fileBefore, fileAfter);
-  const formatter = getFormatter(formatName);
-  return formatter(diff);
+  const data1 = getData(getFullPath(filepath1));
+  const data2 = getData(getFullPath(filepath2));
+  const diff = buildDiff(data1, data2);
+  return format(diff, formatName);
 };

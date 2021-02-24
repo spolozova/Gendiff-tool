@@ -1,17 +1,6 @@
-import * as path from 'path';
-import fs from 'fs';
 import _ from 'lodash';
 
-const getNormalizedPath = (filepath) => path.resolve(process.cwd(), filepath);
-
-const getFileData = (filepath) => {
-  const normalizedPath = getNormalizedPath(filepath);
-  return fs.readFileSync(normalizedPath, 'UTF-8');
-};
-
-const getExtname = (filepath) => path.extname(filepath);
-
-const buildDiff = (fileBefore, fileAfter) => {
+export const buildDiff = (fileBefore, fileAfter) => {
   const keysBefore = _.keys(fileBefore);
   const keysAfter = _.keys(fileAfter);
   const keys = _.sortBy(_.union(keysBefore, keysAfter));
@@ -37,11 +26,4 @@ const buildDiff = (fileBefore, fileAfter) => {
     return { key, value: oldValue, status: 'unchanged' };
   });
   return difference;
-};
-
-export {
-  getNormalizedPath,
-  getFileData,
-  getExtname,
-  buildDiff,
 };
