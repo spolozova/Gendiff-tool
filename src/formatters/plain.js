@@ -1,11 +1,5 @@
 import _ from 'lodash';
 
-const states = {
-  changed: 'was updated.',
-  added: 'was added with value:',
-  deleted: 'was removed',
-};
-
 const formatValue = (value) => {
   if (_.isPlainObject(value)) {
     return '[complex value]';
@@ -13,34 +7,21 @@ const formatValue = (value) => {
   return (typeof value === 'string') ? `'${value}'` : value;
 };
 
-const getPlainForm = (difference) => {
-  const iter = (node, ancestry) => {
-    const {
-      key,
-      value,
-      children,
-      status,
-      oldValue,
-    } = node;
-    const newAncesrty = _.concat(ancestry, key);
-    const currentValue = formatValue(value);
-    const previousValue = formatValue(oldValue);
-    switch (status) {
-      case 'unchanged':
-        return [];
-      case 'updated':
-        return `Property '${newAncesrty.join('.')}' ${states.changed} From ${previousValue} to ${currentValue}`;
-      case 'deleted':
-        return `Property '${newAncesrty.join('.')}' ${states.deleted}`;
-      case 'added':
-        return `Property '${newAncesrty.join('.')}' ${states.added} ${currentValue}`;
-      case 'node':
-        return children.flatMap((item) => iter(item, newAncesrty));
-      default:
-        throw new Error('Unknown status!');
-    }
+const states = {
+  unchanged: () => [],
+  updated: (ancestor, node) => `Property '${ancestor.join('.')}' was updated. From ${formatValue(node.value2)} to ${formatValue(node.value)}`,
+  added: (ancestor, node) => `Property '${ancestor.join('.')}' was added with value: ${formatValue(node.value)}`,
+  deleted: (ancestor) => `Property '${ancestor.join('.')}' was removed`,
+  node: (ancestor, node, iter) => node['children'].flatMap((child) => iter(child, ancestor)),
+};
+
+const getPlain = (difference) => {
+  const iter = (node, ancestor) => {
+    const { key, status } = node;
+    const newAncestor = _.concat(ancestor, key);
+    return states[status](newAncestor, node, iter);
   };
   return difference.flatMap((node) => iter(node, [])).join('\n');
 };
 
-export default getPlainForm;
+export default getPlain;

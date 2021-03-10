@@ -1,56 +1,41 @@
 import _ from 'lodash';
 
-const states = {
-  unchanged: '    ',
-  added: '  + ',
-  deleted: '  - ',
-};
+const makeIdent = (depth) => '    '.repeat(depth);
 
-const stringfy = (value, spacesCount) => {
+const stringify = (value, depth) => {
   const iter = (currentValue, depth) => {
     if (!_.isPlainObject(currentValue)) {
-      return `${currentValue}`;
+      return currentValue;
     }
-    const currentIndent = states.unchanged.repeat(depth);
-    const bracketIndent = states.unchanged.repeat(depth - 1);
     const lines = Object
       .entries(currentValue)
-      .map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
+      .map(([key, value]) => `${makeIdent(depth + 1)}${key}: ${iter(value, depth + 1)}`);
     return [
       '{',
       ...lines,
-      `${bracketIndent}}`,
+      `${makeIdent(depth)}}`,
     ].join('\n');
   };
-  return iter(value, spacesCount);
+  return iter(value, depth);
 };
 
-const getStylishForm = (difference) => {
-  const iter = (currentValue, depth) => {
-    if (!Array.isArray(currentValue)) {
-      return stringfy(currentValue, depth);
-    }
-    const currentIndent = states.unchanged.repeat(depth - 1);
-    const stylizedDiff = currentValue
-      .flatMap(({
-        key,
-        value,
-        children,
-        status,
-        oldValue,
-      }) => {
-        if (status === 'updated') {
-          const deletedValue = `${currentIndent}${states.deleted}${key}: ${iter(oldValue, depth + 1)}`;
-          const addedValue = `${currentIndent}${states.added}${key}: ${iter(value, depth + 1)}`;
-          return [deletedValue, addedValue];
-        }
-        if (status === 'node') {
-          return `${currentIndent}${states.unchanged}${key}: ${iter(children, depth + 1)}`;
-        }
-        return `${currentIndent}${states[status]}${key}: ${iter(value, depth + 1)}`;
-      });
-    return ['{', ...stylizedDiff, `${currentIndent}}`].join('\n');
-  };
-  return iter(difference, 1);
+const states = {
+  unchanged: (node, depth) => `${makeIdent(depth)}    ${node.key}: ${stringify(node.value, depth + 1)}`,
+  added: (node, depth) => `${makeIdent(depth)}  + ${node.key}: ${stringify(node.value, depth + 1)}`,
+  deleted: (node, depth) => `${makeIdent(depth)}  - ${node.key}: ${stringify(node.value, depth + 1)}`,
+  updated: (node, depth) => [
+    `${makeIdent(depth)}  - ${node.key}: ${stringify(node.value2, depth + 1)}`,
+    `${makeIdent(depth)}  + ${node.key}: ${stringify(node.value, depth + 1)}`
+    ],
+  node: (node, depth, iter) => `${makeIdent(depth)}    ${node.key}: ${iter(node.children, depth + 1)}`,
 };
-export default getStylishForm;
+
+const getStylish = (difference) => {
+  const iter = (currentValue, depth) => {
+    const stylizedDiff = currentValue
+      .flatMap((node) => states[node.status](node, depth, iter));
+    return ['{', ...stylizedDiff, `${makeIdent(depth)}}`].join('\n');
+  };
+  return iter(difference, 0);
+};
+export default getStylish;

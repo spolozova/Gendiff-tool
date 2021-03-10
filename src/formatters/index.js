@@ -1,10 +1,10 @@
-import getStylishForm from './stylish.js';
-import getPlainForm from './plain.js';
-import getJsonForm from './json.js';
+import getStylish from './stylish.js';
+import getPlain from './plain.js';
+import getJson from './json.js';
 
 const formatters = {
-  stylish: getStylishForm,
-  plain: getPlainForm,
-  json: getJsonForm,
+  stylish: getStylish,
+  plain: getPlain,
+  json: getJson,
 };
 export default (diff, formatName = 'stylish') => formatters[formatName](diff);
