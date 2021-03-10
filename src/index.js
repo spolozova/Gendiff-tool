@@ -1,7 +1,7 @@
 import * as path from 'path';
 import fs from 'fs';
 
-import buildDiff  from './builder.js';
+import buildDiff from './builder.js';
 import parse from './parsers.js';
 import format from './formatters/index.js';
 
