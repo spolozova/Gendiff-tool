@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export const buildDiff = (data1, data2) => {
+const buildDiff = (data1, data2) => {
   const sortedKeys = _.sortBy(_.union(_.keys(data1), _.keys(data2)));
   const difference = sortedKeys.map((key) => {
     if (!_.has(data1, key)) {
@@ -23,3 +23,5 @@ export const buildDiff = (data1, data2) => {
   });
   return difference;
 };
+
+export default buildDiff;

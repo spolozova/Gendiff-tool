@@ -1,11 +1,11 @@
 import * as path from 'path';
 import fs from 'fs';
 
-import { buildDiff } from './builder.js';
+import buildDiff  from './builder.js';
 import parse from './parsers.js';
 import format from './formatters/index.js';
 
-const getFullPath = (filepath) =>  path.resolve(process.cwd(), filepath);
+const getFullPath = (filepath) => path.resolve(process.cwd(), filepath);
 const getExtension = (filepath) => path.extname(filepath).slice(1);
 const getData = (filepath) => parse(fs.readFileSync(filepath, 'UTF-8'), getExtension(filepath));
 

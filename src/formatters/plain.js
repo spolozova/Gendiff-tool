@@ -12,7 +12,7 @@ const states = {
   updated: (ancestor, node) => `Property '${ancestor.join('.')}' was updated. From ${formatValue(node.value2)} to ${formatValue(node.value)}`,
   added: (ancestor, node) => `Property '${ancestor.join('.')}' was added with value: ${formatValue(node.value)}`,
   deleted: (ancestor) => `Property '${ancestor.join('.')}' was removed`,
-  node: (ancestor, node, iter) => node['children'].flatMap((child) => iter(child, ancestor)),
+  node: (ancestor, node, iter) => node.children.flatMap((child) => iter(child, ancestor)),
 };
 
 const getPlain = (difference) => {
