@@ -6,7 +6,7 @@ import parse from './parsers.js';
 import format from './formatters/index.js';
 
 const getFullPath = (filepath) =>  path.resolve(process.cwd(), filepath);
-const getExtension = (filepath) => path.extname(filepath).split('.').join('');
+const getExtension = (filepath) => path.extname(filepath).slice(1);
 const getData = (filepath) => parse(fs.readFileSync(filepath, 'UTF-8'), getExtension(filepath));
 
 export default (filepath1, filepath2, formatName) => {

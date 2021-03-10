@@ -1,29 +1,25 @@
 import _ from 'lodash';
 
-export const buildDiff = (fileBefore, fileAfter) => {
-  const keysBefore = _.keys(fileBefore);
-  const keysAfter = _.keys(fileAfter);
-  const keys = _.sortBy(_.union(keysBefore, keysAfter));
-  const difference = keys.map((key) => {
-    const oldValue = fileBefore[key];
-    const newValue = fileAfter[key];
-    if (!_.has(fileBefore, key)) {
-      return { key, value: newValue, status: 'added' };
+export const buildDiff = (data1, data2) => {
+  const sortedKeys = _.sortBy(_.union(_.keys(data1), _.keys(data2)));
+  const difference = sortedKeys.map((key) => {
+    if (!_.has(data1, key)) {
+      return { key, value: data2[key], status: 'added' };
     }
-    if (!_.has(fileAfter, key)) {
-      return { key, value: oldValue, status: 'deleted' };
+    if (!_.has(data2, key)) {
+      return { key, value: data1[key], status: 'deleted' };
     }
-    if (_.isPlainObject(oldValue) && _.isPlainObject(newValue)) {
-      return { key, children: buildDiff(oldValue, newValue), status: 'node' };
-    } if (!_.isEqual(oldValue, newValue)) {
+    if (_.isPlainObject(data1[key]) && _.isPlainObject(data2[key])) {
+      return { key, children: buildDiff(data1[key], data2[key]), status: 'node' };
+    } if (!_.isEqual(data1[key], data2[key])) {
       return {
         key,
-        value: newValue,
+        value: data2[key],
         status: 'updated',
-        oldValue,
+        value2: data1[key],
       };
     }
-    return { key, value: oldValue, status: 'unchanged' };
+    return { key, value: data1[key], status: 'unchanged' };
   });
   return difference;
 };
