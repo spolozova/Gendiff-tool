@@ -32,6 +32,6 @@ const handlers = {
 };
 
 export default (difference) => {
-  const iter = (node, depth) => handlers[node.status](node, depth);
-  return iter(difference, 0);
+  const getStylish = (tree, depth) => handlers[tree.status](tree, depth);
+  return getStylish(difference, 0);
 };

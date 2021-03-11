@@ -8,15 +8,12 @@ const formatValue = (value) => {
 };
 
 const handlers = {
-  root: (ancestor, node) => {
-    const output = node.children
-      .flatMap((child) => {
-        const { key, status } = child;
-        const newAncestor = _.concat(ancestor, key);
-        return handlers[status](newAncestor, child);
-      });
-    return output.join('\n');
-  },
+  root: (ancestor, node) => node.children
+    .flatMap((child) => {
+      const newAncestor = _.concat(ancestor, child.key);
+      return handlers[child.status](newAncestor, child);
+    })
+    .join('\n'),
   node: (ancestor, node) => handlers.root(ancestor, node),
   unchanged: () => [],
   updated: (ancestor, node) => `Property '${ancestor.join('.')}' was updated. From ${formatValue(node.value2)} to ${formatValue(node.value)}`,
@@ -25,6 +22,6 @@ const handlers = {
 };
 
 export default (difference) => {
-  const iter = (node, ancestor) => handlers[node.status](ancestor, node);
-  return iter(difference, []);
+  const getPlain = (tree, ancestor) => handlers[tree.status](ancestor, tree);
+  return getPlain(difference, []);
 };
