@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const buildDiff = (data1, data2) => {
   const sortedKeys = _.sortBy(_.union(_.keys(data1), _.keys(data2)));
-  const difference = sortedKeys.map((key) => {
+  const diff = sortedKeys.map((key) => {
     if (!_.has(data1, key)) {
       return { key, value: data2[key], status: 'added' };
     }
@@ -11,7 +11,8 @@ const buildDiff = (data1, data2) => {
     }
     if (_.isPlainObject(data1[key]) && _.isPlainObject(data2[key])) {
       return { key, children: buildDiff(data1[key], data2[key]), status: 'node' };
-    } if (!_.isEqual(data1[key], data2[key])) {
+    }
+    if (!_.isEqual(data1[key], data2[key])) {
       return {
         key,
         value: data2[key],
@@ -21,7 +22,13 @@ const buildDiff = (data1, data2) => {
     }
     return { key, value: data1[key], status: 'unchanged' };
   });
-  return difference;
+  return diff;
 };
 
-export default buildDiff;
+export default (data1, data2) => {
+  const difference = {
+    status: 'root',
+    children: buildDiff(data1, data2),
+  };
+  return difference;
+};
