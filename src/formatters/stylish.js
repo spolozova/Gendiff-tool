@@ -1,4 +1,5 @@
 import _ from 'lodash';
+
 const IDENT_SPACE = 4;
 const NODE_TYPE_SPACE = 2;
 
@@ -14,15 +15,15 @@ const stringify = (value, depth) => {
 };
 
 const handlers = {
-  root: ( { children }, depth) => {
+  root: ({ children }, depth) => {
     const output = children
       .flatMap((child) => handlers[child.status](child, depth + 1));
     return `{\n${output.join('\n')}\n}`;
   },
   node: (node, depth) => {
     const output = node.children.flatMap((child) => handlers[child.status](child, depth + 1));
-    const nodeOutput = `{\n${output.join('\n')}\n${indent(depth)}  }`
-   return `${indent(depth)}  ${node.key}: ${nodeOutput}`;
+    const nodeOutput = `{\n${output.join('\n')}\n${indent(depth)}  }`;
+    return `${indent(depth)}  ${node.key}: ${nodeOutput}`;
   },
   unchanged: (node, depth) => `${indent(depth)}  ${node.key}: ${stringify(node.value, depth)}`,
   added: (node, depth) => `${indent(depth)}+ ${node.key}: ${stringify(node.value, depth)}`,

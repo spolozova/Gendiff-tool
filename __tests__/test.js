@@ -14,12 +14,12 @@ const json2 = getFixturePath('json2.json');
 const yaml1 = getFixturePath('yaml1.yml');
 const yaml2 = getFixturePath('yaml2.yml');
 beforeAll(() => {
-const stylishData = fs.readFileSync(getFixturePath('stylish.txt'), 'utf-8');
-const plainData = fs.readFileSync(getFixturePath('plain.txt'), 'utf-8');
-const jsonData = fs.readFileSync(getFixturePath('json.txt'), 'utf-8').trim();
-expectedData.stylish = stylishData.split('\n\n\n');
-expectedData.plain = plainData.split('\n\n\n');
-expectedData.json = jsonData.trim().split('\n\n\n');
+  const stylishData = fs.readFileSync(getFixturePath('stylish.txt'), 'utf-8');
+  const plainData = fs.readFileSync(getFixturePath('plain.txt'), 'utf-8');
+  const jsonData = fs.readFileSync(getFixturePath('json.txt'), 'utf-8').trim();
+  expectedData.stylish = stylishData.split('\n\n\n');
+  expectedData.plain = plainData.split('\n\n\n');
+  expectedData.json = jsonData.trim().split('\n\n\n');
 });
 
 test('getDiff JSON stylish', () => {

@@ -7,22 +7,21 @@ const buildDiff = (data1, data2) => {
       return {
         key,
         value: data2[key],
-        status: 'added'
+        status: 'added',
       };
     }
     if (!_.has(data2, key)) {
       return {
         key,
         value: data1[key],
-        status: 'deleted'
+        status: 'deleted',
       };
     }
     if (_.isPlainObject(data1[key]) && _.isPlainObject(data2[key])) {
       return {
         key,
-        children: buildDiff(data1[key],
-        data2[key]),
-        status: 'node'
+        children: buildDiff(data1[key], data2[key]),
+        status: 'node',
       };
     }
     if (!_.isEqual(data1[key], data2[key])) {
@@ -36,12 +35,12 @@ const buildDiff = (data1, data2) => {
     return {
       key,
       value: data1[key],
-      status: 'unchanged'
+      status: 'unchanged',
     };
   });
 };
 
 export default (data1, data2) => ({
   status: 'root',
-  children: buildDiff(data1, data2)
+  children: buildDiff(data1, data2),
 });

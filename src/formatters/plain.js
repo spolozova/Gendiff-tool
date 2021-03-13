@@ -9,9 +9,9 @@ const formatValue = (value) => {
 
 const handlers = {
   root: (ancestor, { children }) => children.map((child) => {
-      const newAncestor = _.concat(ancestor, child.key);
-      return handlers[child.status](newAncestor, child);
-    }).join('\n'),
+    const newAncestor = _.concat(ancestor, child.key);
+    return handlers[child.status](newAncestor, child);
+  }).join('\n'),
   node: (ancestor, { children }) => children.flatMap((child) => {
     const newAncestor = _.concat(ancestor, child.key);
     return handlers[child.status](newAncestor, child);
