@@ -8,21 +8,17 @@ const formatValue = (value) => {
 };
 
 const handlers = {
-  root: (ancestor, { children }) => children.map((child) => {
-    const newAncestor = _.concat(ancestor, child.key);
-    return handlers[child.status](newAncestor, child);
-  }).join('\n'),
-  node: (ancestor, { children }) => children.flatMap((child) => {
-    const newAncestor = _.concat(ancestor, child.key);
-    return handlers[child.status](newAncestor, child);
-  }).join('\n'),
   unchanged: () => [],
+  root: (ancestor, { children }, iter) => children
+    .flatMap((node) => iter(node, [...ancestor, node.key])),
+  node: (ancestor, { children }, iter) => children
+    .flatMap((node) => iter(node, [...ancestor, node.key])),
   changed: (ancestor, node) => `Property '${ancestor.join('.')}' was updated. From ${formatValue(node.value)} to ${formatValue(node.value2)}`,
   added: (ancestor, node) => `Property '${ancestor.join('.')}' was added with value: ${formatValue(node.value)}`,
   deleted: (ancestor) => `Property '${ancestor.join('.')}' was removed`,
 };
 
 export default (difference) => {
-  const getPlain = (tree, ancestor) => handlers[tree.status](ancestor, tree);
-  return getPlain(difference, []);
+  const iter = (tree, ancestor) => handlers[tree.status](ancestor, tree, iter);
+  return iter(difference, []).join('\n');
 };

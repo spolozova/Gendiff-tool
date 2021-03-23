@@ -12,40 +12,36 @@ const json1 = getFixturePath('json1.json');
 const json2 = getFixturePath('json2.json');
 const yaml1 = getFixturePath('yaml1.yml');
 const yaml2 = getFixturePath('yaml2.yml');
-const stylishData = fs.readFileSync(getFixturePath('stylish.txt'), 'utf-8');
-const plainData = fs.readFileSync(getFixturePath('plain.txt'), 'utf-8');
-const jsonData = fs.readFileSync(getFixturePath('json.txt'), 'utf-8');
-const stylish = stylishData.split('\n\n\n');
-const plain = plainData.split('\n\n\n');
-const json = jsonData.trim().split('\n\n\n');
-const expectedData = { stylish, plain, json };
+const expectedStylish = fs.readFileSync(getFixturePath('expected/stylish.txt'), 'utf-8');
+const expectedPlain = fs.readFileSync(getFixturePath('expected/plain.txt'), 'utf-8');
+const expectedJson = fs.readFileSync(getFixturePath('expected/json.txt'), 'utf-8');
 
 test('getDiff JSON stylish', () => {
-  const expected = expectedData.stylish[0];
+  const expected = expectedStylish;
   expect(genDiff(json1, json2, 'stylish')).toEqual(expected);
 });
 
 test('genDiff YAML stylish', () => {
-  const expected = expectedData.stylish[1];
+  const expected = expectedStylish;
   expect(genDiff(yaml1, yaml2, 'stylish')).toEqual(expected);
 });
 
 test('getDiff JSON plain', () => {
-  const expected = expectedData.plain[0];
+  const expected = expectedPlain;
   expect(genDiff(json1, json2, 'plain')).toEqual(expected);
 });
 
 test('genDiff YAML plain', () => {
-  const expected = expectedData.plain[1];
+  const expected = expectedPlain;
   expect(genDiff(yaml1, yaml2, 'plain')).toEqual(expected);
 });
 
 test('getDiff JSON json', () => {
-  const expected = expectedData.json[0];
+  const expected = expectedJson;
   expect(genDiff(json1, json2, 'json')).toEqual(expected);
 });
 
 test('genDiff YAML json', () => {
-  const expected = expectedData.json[1];
+  const expected = expectedJson;
   expect(genDiff(yaml1, yaml2, 'json')).toEqual(expected);
 });
