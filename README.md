@@ -1,5 +1,5 @@
 # Gendiff tool #
-### Compares two configuration files and shows a difference.
+**Compares two configuration files and shows a difference.**
 -------
 
 [![Actions Status](https://github.com/spolozova/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/spolozova/frontend-project-lvl2/actions)
