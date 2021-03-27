@@ -1,5 +1,5 @@
-## Gendiff tool
-#### Compares two configuration files and shows a difference.
+# Gendiff tool #
+### Compares two configuration files and shows a difference.
 -------
 
 [![Actions Status](https://github.com/spolozova/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/spolozova/frontend-project-lvl2/actions)
@@ -24,6 +24,7 @@ $ npm link
 **Supported file formats:**
 * yaml
 * json
+
 **Supported output formats:**
 * stylish (default option)
 * plain
@@ -38,17 +39,13 @@ make lint
 make test
 ```
 ### Examples of usage:
-#### 1.Comparing flat files: 
-##### json
-[![jsonflat](https://asciinema.org/a/390111)
-##### yaml
-[![yamlflat](https://asciinema.org/a/390529)
 
-#### 2.Stylish output format: 
-[![stylish](https://asciinema.org/a/403027)
+**1. [json flat files](https://asciinema.org/a/390111)**
 
-#### 3.Plain output format:
-[![plain](https://asciinema.org/a/403028)
+**2. [yaml flat files](https://asciinema.org/a/390529)**
 
-#### 4.JSON output format:
-[![json](https://asciinema.org/a/403029)
+**3. [stylish output format](https://asciinema.org/a/403027)**
+
+**4. [plain output format](https://asciinema.org/a/403028)**
+
+**5. [json output format](https://asciinema.org/a/403029)**
