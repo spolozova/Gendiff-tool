@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const formatValue = (value) => {
+const stringify = (value) => {
   if (_.isPlainObject(value)) {
     return '[complex value]';
   }
@@ -13,8 +13,8 @@ const handlers = {
     .flatMap((node) => iter(node, [...ancestor, node.key])),
   node: (ancestor, { children }, iter) => children
     .flatMap((node) => iter(node, [...ancestor, node.key])),
-  changed: (ancestor, node) => `Property '${ancestor.join('.')}' was updated. From ${formatValue(node.value)} to ${formatValue(node.value2)}`,
-  added: (ancestor, node) => `Property '${ancestor.join('.')}' was added with value: ${formatValue(node.value)}`,
+  changed: (ancestor, node) => `Property '${ancestor.join('.')}' was updated. From ${stringify(node.value)} to ${stringify(node.value2)}`,
+  added: (ancestor, node) => `Property '${ancestor.join('.')}' was added with value: ${stringify(node.value)}`,
   deleted: (ancestor) => `Property '${ancestor.join('.')}' was removed`,
 };
 
