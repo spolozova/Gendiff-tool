@@ -15,3 +15,6 @@ test-coverage:
 
 lint:
 	npx eslint .
+
+link: 
+	npm link
