@@ -8,7 +8,7 @@
 [![Node CI](https://github.com/spolozova/frontend-project-lvl2/actions/workflows/node.js.yml/badge.svg)](https://github.com/spolozova/frontend-project-lvl2/actions/workflows/node.js.yml)
 ### Install
 ```
-$ git clone git@github.com:spolozova/frontend-project-lvl2.git
+$ git clone git@github.com:spolozova/Gendiff-tool.git
 $ make install
 $ npm link
 ```
